@@ -44,7 +44,7 @@ func main() {
 	svc := flags.NewService(ports.RemoteStorageAdminHTTP)
 
 	if os.Getenv(storage.SpanStorageTypeEnvVar) == "" {
-		os.Setenv(storage.SpanStorageTypeEnvVar, "memory")
+		os.Setenv(storage.SpanStorageTypeEnvVar, "clickhouse")
 		// other storage types default to the same type as SpanStorage
 	}
 	storageFactory, err := storage.NewFactory(storage.FactoryConfigFromEnvAndCLI(os.Args, os.Stderr))

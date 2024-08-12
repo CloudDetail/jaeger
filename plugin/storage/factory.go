@@ -30,6 +30,7 @@ import (
 	"github.com/jaegertracing/jaeger/plugin/storage/badger"
 	"github.com/jaegertracing/jaeger/plugin/storage/blackhole"
 	"github.com/jaegertracing/jaeger/plugin/storage/cassandra"
+	"github.com/jaegertracing/jaeger/plugin/storage/clickhouse"
 	"github.com/jaegertracing/jaeger/plugin/storage/es"
 	"github.com/jaegertracing/jaeger/plugin/storage/grpc"
 	"github.com/jaegertracing/jaeger/plugin/storage/kafka"
@@ -49,6 +50,7 @@ const (
 	grpcPluginDeprecated     = "grpc-plugin"
 	badgerStorageType        = "badger"
 	blackholeStorageType     = "blackhole"
+	clickhouseStorageType    = "clickhouse"
 
 	downsamplingRatio    = "downsampling.ratio"
 	downsamplingHashSalt = "downsampling.hashsalt"
@@ -141,6 +143,8 @@ func (*Factory) getFactoryOfType(factoryType string) (storage.Factory, error) {
 		return grpc.NewFactory(), nil
 	case blackholeStorageType:
 		return blackhole.NewFactory(), nil
+	case clickhouseStorageType:
+		return clickhouse.NewFactory(), nil
 	default:
 		return nil, fmt.Errorf("unknown storage type %s. Valid types are %v", factoryType, AllStorageTypes)
 	}
