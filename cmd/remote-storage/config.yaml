@@ -37,6 +37,8 @@ metrics_endpoint: localhost:9090
 # Replication can be used only on database with Atomic engine.
 # Default false.
 replication:
+# clusterName Default "cluster"
+cluster:
 # Table with spans. Default "jaeger_spans_local" or "jaeger_spans" when replication is enabled.
 spans_table:
 # Span index table. Default "jaeger_index_local" or "jaeger_index" when replication is enabled.

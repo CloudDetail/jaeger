@@ -19,6 +19,7 @@ const (
 	defaultDatabaseName                 = "default"
 	defaultMetricsEndpoint              = "localhost:9090"
 	defaultMaxNumSpans                  = 0
+	defaultCluster                      = "cluster"
 
 	defaultSpansTable      clickhousespanstore.TableName = "jaeger_spans"
 	defaultSpansIndexTable clickhousespanstore.TableName = "jaeger_index"
@@ -61,6 +62,8 @@ type Configuration struct {
 	MetricsEndpoint string `yaml:"metrics_endpoint"`
 	// Whether to use SQL scripts supporting replication and sharding. Default false.
 	Replication bool `yaml:"replication"`
+	// ClusterName
+	Cluster string `yaml:"cluster"`
 	// If non-empty, enables multitenancy in SQL scripts, and assigns the tenant name for this instance.
 	Tenant string `yaml:"tenant"`
 	// Table with spans. Default "jaeger_spans_local" or "jaeger_spans" when replication is enabled.
@@ -143,6 +146,9 @@ func (cfg *Configuration) setDefaults() {
 		} else {
 			cfg.OperationsTable = defaultOperationsTable.ToLocal()
 		}
+	}
+	if cfg.Cluster == "" {
+		cfg.Cluster = defaultCluster
 	}
 }
 

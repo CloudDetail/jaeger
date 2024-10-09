@@ -260,9 +260,11 @@ type tableArgs struct {
 
 	Multitenant bool
 	Replication bool
+	Cluster     string
 }
 
 type distributedTableArgs struct {
+	Cluster  string
 	Database string
 	Table    clickhousespanstore.TableName
 	Hash     string
@@ -317,6 +319,7 @@ func runInitScripts(logger *zap.Logger, db *sql.DB, cfg Configuration) error {
 
 			Multitenant: cfg.Tenant != "",
 			Replication: cfg.Replication,
+			Cluster:     cfg.Cluster,
 		}
 
 		if cfg.Replication {
@@ -335,6 +338,7 @@ func runInitScripts(logger *zap.Logger, db *sql.DB, cfg Configuration) error {
 		if cfg.Replication {
 			// Now these tables omit the "_local" suffix
 			distargs := distributedTableArgs{
+				Cluster:  cfg.Cluster,
 				Table:    cfg.SpansTable,
 				Database: cfg.Database,
 				Hash:     "cityHash64(traceID)",

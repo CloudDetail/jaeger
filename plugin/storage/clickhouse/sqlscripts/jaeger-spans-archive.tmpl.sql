@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS {{.SpansArchiveTable}}
-{{if .Replication}}ON CLUSTER '{cluster}'{{end}}
+{{if .Replication}}ON CLUSTER '{{.Cluster}}'{{end}}
 (
     {{if .Multitenant -}}
     tenant    LowCardinality(String) CODEC (ZSTD(1)),

@@ -1,5 +1,5 @@
 CREATE MATERIALIZED VIEW IF NOT EXISTS {{.OperationsTable}}
-{{if .Replication}}ON CLUSTER '{cluster}'{{end}}
+{{if .Replication}}ON CLUSTER '{{.Cluster}}'{{end}}
     ENGINE {{if .Replication}}ReplicatedSummingMergeTree{{else}}SummingMergeTree{{end}}
     {{.TTLDate}}
     PARTITION BY (
