@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS {{.OperationsSummaryTable}}
     spankind String
     )
     ENGINE = {{if .Replication}}ReplicatedSummingMergeTree('/clickhouse/tables/{uuid}/{shard}', '{replica}'){{else}}SummingMergeTree{{end}}
+    {{.TTLDate}}
     PARTITION BY (
     {{if .Multitenant -}}
       tenant,

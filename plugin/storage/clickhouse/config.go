@@ -21,9 +21,10 @@ const (
 	defaultMaxNumSpans                  = 0
 	defaultCluster                      = "cluster"
 
-	defaultSpansTable      clickhousespanstore.TableName = "jaeger_spans"
-	defaultSpansIndexTable clickhousespanstore.TableName = "jaeger_index"
-	defaultOperationsTable clickhousespanstore.TableName = "jaeger_operations"
+	defaultSpansTable             clickhousespanstore.TableName = "jaeger_spans"
+	defaultSpansIndexTable        clickhousespanstore.TableName = "jaeger_index"
+	defaultOperationsTable        clickhousespanstore.TableName = "jaeger_operations_view"
+	defaultOperationsSummaryTable clickhousespanstore.TableName = "jaeger_operations_local"
 )
 
 type Configuration struct {
@@ -146,6 +147,13 @@ func (cfg *Configuration) setDefaults() {
 			cfg.OperationsTable = defaultOperationsTable
 		} else {
 			cfg.OperationsTable = defaultOperationsTable.ToLocal()
+		}
+	}
+	if cfg.OperationsSummaryTable == "" {
+		if cfg.Replication {
+			cfg.OperationsSummaryTable = defaultOperationsSummaryTable
+		} else {
+			cfg.OperationsSummaryTable = defaultOperationsSummaryTable.ToLocal()
 		}
 	}
 	if cfg.Cluster == "" {

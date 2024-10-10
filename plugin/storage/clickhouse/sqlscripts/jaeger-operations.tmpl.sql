@@ -24,4 +24,3 @@ GROUP BY
     operation,
     tags.key,
     tags.value
-POPULATE
