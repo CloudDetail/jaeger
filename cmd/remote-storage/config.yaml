@@ -43,10 +43,8 @@ cluster:
 spans_table:
 # Span index table. Default "jaeger_index_local" or "jaeger_index" when replication is enabled.
 spans_index_table:
-# Operations table. Default "jaeger_operations_view" or "jaeger_operations" when replication is enabled.
+# Operations table. Default "jaeger_operations_local" or "jaeger_operations" when replication is enabled.
 operations_table:
-# Operations table's data storage table. Default "jaeger_operations_local"
-operations_summary_table:
 # TTL for data in tables in days. If 0, no TTL is set. Default 0.
 ttl:
 # The maximum number of spans to fetch per trace. If 0, no limit is set. Default 0.
