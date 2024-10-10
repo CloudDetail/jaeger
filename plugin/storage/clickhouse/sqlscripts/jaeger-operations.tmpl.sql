@@ -1,23 +1,6 @@
 CREATE MATERIALIZED VIEW IF NOT EXISTS {{.OperationsTable}}
 {{if .Replication}}ON CLUSTER '{{.Cluster}}'{{end}}
-    ENGINE {{if .Replication}}ReplicatedSummingMergeTree{{else}}SummingMergeTree{{end}}
-    {{.TTLDate}}
-    PARTITION BY (
-        {{if .Multitenant -}}
-        tenant,
-        {{- end -}}
-        toYYYYMM(date)
-    )
-    ORDER BY (
-        {{if .Multitenant -}}
-        tenant,
-        {{- end -}}
-        date,
-        service,
-        operation
-    )
-    SETTINGS index_granularity = 32
-    POPULATE
+TO {{.OperationsSummaryTable}}
 AS SELECT
     {{if .Multitenant -}}
     tenant,
@@ -41,3 +24,4 @@ GROUP BY
     operation,
     tags.key,
     tags.value
+POPULATE
