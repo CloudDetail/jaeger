@@ -149,9 +149,6 @@ func (cfg *Configuration) setDefaults() {
 		}
 	}
 	cfg.OperationsViewTable = defaultOperationsTable.ToView()
-	if cfg.Cluster == "" {
-		cfg.Cluster = defaultCluster
-	}
 }
 
 func (cfg *Configuration) GetSpansArchiveTable() clickhousespanstore.TableName {

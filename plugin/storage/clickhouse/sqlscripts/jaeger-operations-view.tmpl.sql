@@ -1,5 +1,5 @@
 CREATE MATERIALIZED VIEW IF NOT EXISTS {{.OperationsViewTable}}
-{{if .Replication}}ON CLUSTER '{{.Cluster}}'{{end}}
+{{if .Cluster}}ON CLUSTER '{{.Cluster}}'{{end}}
 TO {{.OperationsTable}}
 AS SELECT
     {{if .Multitenant -}}

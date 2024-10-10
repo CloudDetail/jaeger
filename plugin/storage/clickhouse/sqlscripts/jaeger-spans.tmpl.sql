@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS {{.SpansTable}}
-{{if .Replication}}ON CLUSTER '{{.Cluster}}'{{end}}
+{{if .Cluster}}ON CLUSTER '{{.Cluster}}'{{end}}
 (
     {{if .Multitenant -}}
     tenant    LowCardinality(String) CODEC (ZSTD(1)),

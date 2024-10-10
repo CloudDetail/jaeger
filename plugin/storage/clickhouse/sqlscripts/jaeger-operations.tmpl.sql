@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS {{.OperationsTable}}
-    {{if .Replication}}ON CLUSTER '{{.Cluster}}'{{end}}
+    {{if .Cluster}}ON CLUSTER '{{.Cluster}}'{{end}}
 (
     {{if .Multitenant -}}
       tenant LowCardinality(String),

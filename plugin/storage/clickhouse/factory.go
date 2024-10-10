@@ -338,7 +338,7 @@ func runInitScripts(logger *zap.Logger, db *sql.DB, cfg Configuration) error {
 		sqlStatements = append(sqlStatements, render(templates, "jaeger-spans.tmpl.sql", args))
 		sqlStatements = append(sqlStatements, render(templates, "jaeger-spans-archive.tmpl.sql", args))
 
-		if cfg.Replication {
+		if cfg.Replication || cfg.Cluster != "" {
 			// Now these tables omit the "_local" suffix
 			distargs := distributedTableArgs{
 				Cluster:  cfg.Cluster,
