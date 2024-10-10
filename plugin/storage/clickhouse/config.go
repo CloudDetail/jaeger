@@ -71,8 +71,9 @@ type Configuration struct {
 	// Span index table. Default "jaeger_index_local" or "jaeger_index" when replication is enabled.
 	SpansIndexTable clickhousespanstore.TableName `yaml:"spans_index_table"`
 	// Operations table. Default "jaeger_operations_local" or "jaeger_operations" when replication is enabled.
-	OperationsTable   clickhousespanstore.TableName `yaml:"operations_table"`
-	spansArchiveTable clickhousespanstore.TableName
+	OperationsTable     clickhousespanstore.TableName `yaml:"operations_table"`
+	OperationsViewTable clickhousespanstore.TableName
+	spansArchiveTable   clickhousespanstore.TableName
 	// TTL for data in tables in days. If 0, no TTL is set. Default 0.
 	TTLDays uint `yaml:"ttl"`
 	// The maximum number of spans to fetch per trace. If 0, no limits is set. Default 0.
@@ -147,6 +148,7 @@ func (cfg *Configuration) setDefaults() {
 			cfg.OperationsTable = defaultOperationsTable.ToLocal()
 		}
 	}
+	cfg.OperationsViewTable = defaultOperationsTable.ToView()
 	if cfg.Cluster == "" {
 		cfg.Cluster = defaultCluster
 	}

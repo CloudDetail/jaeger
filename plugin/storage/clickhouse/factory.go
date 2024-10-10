@@ -250,10 +250,11 @@ func connector(cfg Configuration) (*sql.DB, error) {
 type tableArgs struct {
 	Database string
 
-	SpansIndexTable   clickhousespanstore.TableName
-	SpansTable        clickhousespanstore.TableName
-	OperationsTable   clickhousespanstore.TableName
-	SpansArchiveTable clickhousespanstore.TableName
+	SpansIndexTable     clickhousespanstore.TableName
+	SpansTable          clickhousespanstore.TableName
+	OperationsTable     clickhousespanstore.TableName
+	OperationsViewTable clickhousespanstore.TableName
+	SpansArchiveTable   clickhousespanstore.TableName
 
 	TTLTimestamp string
 	TTLDate      string
@@ -309,10 +310,11 @@ func runInitScripts(logger *zap.Logger, db *sql.DB, cfg Configuration) error {
 		args := tableArgs{
 			Database: cfg.Database,
 
-			SpansIndexTable:   cfg.SpansIndexTable,
-			SpansTable:        cfg.SpansTable,
-			OperationsTable:   cfg.OperationsTable,
-			SpansArchiveTable: cfg.GetSpansArchiveTable(),
+			SpansIndexTable:     cfg.SpansIndexTable,
+			SpansTable:          cfg.SpansTable,
+			OperationsTable:     cfg.OperationsTable,
+			OperationsViewTable: cfg.OperationsViewTable,
+			SpansArchiveTable:   cfg.GetSpansArchiveTable(),
 
 			TTLTimestamp: ttlTimestamp,
 			TTLDate:      ttlDate,
@@ -332,6 +334,7 @@ func runInitScripts(logger *zap.Logger, db *sql.DB, cfg Configuration) error {
 
 		sqlStatements = append(sqlStatements, render(templates, "jaeger-index.tmpl.sql", args))
 		sqlStatements = append(sqlStatements, render(templates, "jaeger-operations.tmpl.sql", args))
+		sqlStatements = append(sqlStatements, render(templates, "jaeger-operations-view.tmpl.sql", args))
 		sqlStatements = append(sqlStatements, render(templates, "jaeger-spans.tmpl.sql", args))
 		sqlStatements = append(sqlStatements, render(templates, "jaeger-spans-archive.tmpl.sql", args))
 
