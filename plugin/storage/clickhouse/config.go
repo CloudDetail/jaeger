@@ -124,7 +124,7 @@ func (cfg *Configuration) setDefaults() {
 		cfg.MaxNumSpans = defaultMaxNumSpans
 	}
 	if cfg.SpansTable == "" {
-		if cfg.Replication {
+		if cfg.Replication || cfg.Cluster != "" {
 			cfg.SpansTable = defaultSpansTable
 			cfg.spansArchiveTable = defaultSpansTable + "_archive"
 		} else {
@@ -135,14 +135,14 @@ func (cfg *Configuration) setDefaults() {
 		cfg.spansArchiveTable = cfg.SpansTable + "_archive"
 	}
 	if cfg.SpansIndexTable == "" {
-		if cfg.Replication {
+		if cfg.Replication || cfg.Cluster != "" {
 			cfg.SpansIndexTable = defaultSpansIndexTable
 		} else {
 			cfg.SpansIndexTable = defaultSpansIndexTable.ToLocal()
 		}
 	}
 	if cfg.OperationsTable == "" {
-		if cfg.Replication {
+		if cfg.Replication || cfg.Cluster != "" {
 			cfg.OperationsTable = defaultOperationsTable
 		} else {
 			cfg.OperationsTable = defaultOperationsTable.ToLocal()

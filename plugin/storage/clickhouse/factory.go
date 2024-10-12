@@ -114,7 +114,7 @@ func newStore(logger *zap.Logger, cfg Configuration) (*Store, error) {
 		_ = db.Close()
 		return nil, err
 	}
-	if cfg.Replication {
+	if cfg.Replication || cfg.Cluster != "" {
 		return &Store{
 			db: db,
 			writer: clickhousespanstore.NewSpanWriter(
@@ -324,7 +324,7 @@ func runInitScripts(logger *zap.Logger, db *sql.DB, cfg Configuration) error {
 			Cluster:     cfg.Cluster,
 		}
 
-		if cfg.Replication {
+		if cfg.Replication || cfg.Cluster != "" {
 			// Add "_local" to the local table names, and omit it from the distributed tables below
 			args.SpansIndexTable = args.SpansIndexTable.ToLocal()
 			args.SpansTable = args.SpansTable.ToLocal()
